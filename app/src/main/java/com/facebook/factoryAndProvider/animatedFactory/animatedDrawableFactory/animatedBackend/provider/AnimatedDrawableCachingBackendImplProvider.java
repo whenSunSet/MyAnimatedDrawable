@@ -6,6 +6,7 @@ package com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.
 
 import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.animatedBackend.AnimatedDrawableBackend;
 import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.animatedBackend.AnimatedDrawableCachingBackendImpl;
+import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.other.AnimatedDrawableOptions;
 
 /**
  * 一个提提供{@link AnimatedDrawableCachingBackendImpl}的类

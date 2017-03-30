@@ -4,12 +4,12 @@ package com.facebook.animated.gif;
  * Created by Administrator on 2017/3/11 0011.
  */
 
+import com.facebook.common.DoNotStrip;
+import com.facebook.common.nativeLoader.SoLoaderShim;
+import com.facebook.common.s.Preconditions;
 import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.animatedDrawable.AnimatedDrawableFrameInfo;
 import com.facebook.factoryAndProvider.animatedFactory.animatedImageFactory.animatedImage.AnimatedImage;
-import com.facebook.imageDecode.AnimatedImageDecoder;
-import com.facebook.util.DoNotStrip;
-import com.facebook.util.Preconditions;
-import com.facebook.util.SoLoaderShim;
+import com.facebook.image.imageDecode.AnimatedImageDecoder;
 
 import java.nio.ByteBuffer;
 

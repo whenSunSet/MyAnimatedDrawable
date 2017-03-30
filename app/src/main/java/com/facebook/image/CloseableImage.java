@@ -4,6 +4,10 @@ package com.facebook.image;
  * Created by Administrator on 2017/3/28 0028.
  */
 
+import com.facebook.image.imageInfo.ImageInfo;
+import com.facebook.image.imageInfo.ImmutableQualityInfo;
+import com.facebook.image.imageInfo.QualityInfo;
+
 import java.io.Closeable;
 
 /**

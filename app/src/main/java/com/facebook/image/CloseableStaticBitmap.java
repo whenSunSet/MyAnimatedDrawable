@@ -6,10 +6,11 @@ package com.facebook.image;
 
 import android.graphics.Bitmap;
 
+import com.facebook.common.s.Preconditions;
+import com.facebook.common.util.BitmapUtil;
+import com.facebook.image.imageInfo.QualityInfo;
 import com.facebook.references.CloseableReference;
 import com.facebook.references.ResourceReleaser;
-import com.facebook.util.BitmapUtil;
-import com.facebook.util.Preconditions;
 
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;

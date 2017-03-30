@@ -7,7 +7,7 @@ package com.facebook.animated.gif;
 import android.graphics.Bitmap;
 
 import com.facebook.factoryAndProvider.animatedFactory.animatedImageFactory.animatedImage.AnimatedImageFrame;
-import com.facebook.util.DoNotStrip;
+import com.facebook.common.DoNotStrip;
 
 import javax.annotation.concurrent.ThreadSafe;
 

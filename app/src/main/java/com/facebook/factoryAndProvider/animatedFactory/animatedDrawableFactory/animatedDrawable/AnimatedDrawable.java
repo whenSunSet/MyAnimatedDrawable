@@ -13,9 +13,9 @@ import android.view.animation.LinearInterpolator;
 
 import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.animatedBackend.AnimatedDrawableBackend;
 import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.animatedBackend.AnimatedDrawableCachingBackend;
-import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.drawDebugImformation.AnimatedDrawableDiagnostics;
+import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.other.AnimatedDrawableDiagnostics;
 import com.facebook.factoryAndProvider.animatedFactory.animatedImageFactory.animatedImage.AnimatedImage;
-import com.facebook.util.MonotonicClock;
+import com.facebook.common.time.MonotonicClock;
 
 import java.util.concurrent.ScheduledExecutorService;
 

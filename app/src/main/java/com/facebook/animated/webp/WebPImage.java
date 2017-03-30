@@ -5,12 +5,12 @@ package com.facebook.animated.webp;
  */
 
 
+import com.facebook.common.DoNotStrip;
+import com.facebook.common.nativeLoader.StaticWebpNativeLoader;
+import com.facebook.common.s.Preconditions;
 import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.animatedDrawable.AnimatedDrawableFrameInfo;
 import com.facebook.factoryAndProvider.animatedFactory.animatedImageFactory.animatedImage.AnimatedImage;
-import com.facebook.imageDecode.AnimatedImageDecoder;
-import com.facebook.util.DoNotStrip;
-import com.facebook.util.Preconditions;
-import com.facebook.util.StaticWebpNativeLoader;
+import com.facebook.image.imageDecode.AnimatedImageDecoder;
 
 import java.nio.ByteBuffer;
 

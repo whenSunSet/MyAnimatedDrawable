@@ -6,8 +6,8 @@ package com.facebook.references;
 
 import android.support.annotation.VisibleForTesting;
 
-import com.facebook.util.Closeables;
-import com.facebook.util.Preconditions;
+import com.facebook.common.s.Closeables;
+import com.facebook.common.s.Preconditions;
 
 import java.io.Closeable;
 import java.io.IOException;

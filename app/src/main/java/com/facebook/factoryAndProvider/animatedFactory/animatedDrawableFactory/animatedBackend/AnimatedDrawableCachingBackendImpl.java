@@ -13,12 +13,17 @@ import android.graphics.Rect;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.util.SparseArrayCompat;
 
+import com.facebook.common.s.ByteConstants;
+import com.facebook.common.time.MonotonicClock;
+import com.facebook.common.util.AnimatedDrawableUtil;
 import com.facebook.executor.SerialExecutorService;
+import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.animatedDrawable.AnimatedDrawableFrameInfo;
+import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.other.AnimatedDrawableOptions;
+import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.other.AnimatedImageCompositor;
+import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.other.WhatToKeepCachedArray;
+import com.facebook.log.FLog;
 import com.facebook.references.CloseableReference;
 import com.facebook.references.ResourceReleaser;
-import com.facebook.util.AnimatedDrawableUtil;
-import com.facebook.util.ByteConstants;
-import com.facebook.util.MonotonicClock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +36,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.concurrent.GuardedBy;
+
+import bolts.Continuation;
+import bolts.Task;
 
 /**
  * 一个缓存和预读layer的代理{@link AnimatedDrawableBackend}

@@ -4,12 +4,21 @@ package com.facebook.image;
  * Created by Administrator on 2017/3/28 0028.
  */
 
-import android.graphics.ImageFormat;
 import android.support.annotation.VisibleForTesting;
 import android.util.Pair;
 
+import com.facebook.cacheKey.CacheKey;
+import com.facebook.common.PooledByteBufferInputStream;
+import com.facebook.common.s.Preconditions;
+import com.facebook.common.util.BitmapUtil;
+import com.facebook.common.util.JfifUtil;
+import com.facebook.common.util.WebpUtil;
+import com.facebook.image.imageFormat.DefaultImageFormats;
+import com.facebook.image.imageFormat.ImageFormat;
+import com.facebook.image.imageFormat.ImageFormatChecker;
+import com.facebook.imagepipeline.memory.PooledByteBuffer;
 import com.facebook.references.CloseableReference;
-import com.facebook.util.Preconditions;
+import com.facebook.references.SharedReference;
 
 import java.io.Closeable;
 import java.io.FileInputStream;

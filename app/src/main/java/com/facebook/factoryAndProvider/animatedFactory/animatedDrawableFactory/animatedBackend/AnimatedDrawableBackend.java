@@ -15,12 +15,11 @@ import com.facebook.factoryAndProvider.animatedFactory.animatedImageFactory.anim
 import com.facebook.references.CloseableReference;
 
 /**
- * {@link AnimatedDrawable}使用的抽象出来的图像格式的接口
+ * {@link AnimatedDrawable}使用的抽象出来的动画数据的接口
  */
 public interface AnimatedDrawableBackend {
 
     /**
-     * 得到的原始结果解码
      * Gets the original result of the decode.
      *
      * @return the original result of the code
@@ -129,7 +128,7 @@ public interface AnimatedDrawableBackend {
     int getDurationMsForFrame(int frameNumber);
 
     /**
-     *
+     * 获取预览帧
      * Gets the frame number to use for the preview frame.
      *
      * @return the frame number to use for the preview frame
@@ -137,6 +136,7 @@ public interface AnimatedDrawableBackend {
     int getFrameForPreview();
 
     /**
+     * 创建一个使用新边界的AnimatedDrawableBackend
      * Creates a new {@link AnimatedDrawableBackend} with the same parameters but with a new bounds.
      *
      * @param bounds the bounds

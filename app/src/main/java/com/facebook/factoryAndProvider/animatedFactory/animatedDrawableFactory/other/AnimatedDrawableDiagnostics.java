@@ -1,4 +1,4 @@
-package com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.drawDebugImformation;
+package com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.other;
 
 /**
  * Created by Administrator on 2017/3/28 0028.
@@ -11,7 +11,7 @@ import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.a
 import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.animatedDrawable.AnimatedDrawable;
 
 /**
- * 对于{@link AnimatedDrawable}的Diagnostics接口
+ * 用来在动画上面绘制debug信息的接口
  * Diagnostics interface for {@link AnimatedDrawable}.
  */
 public interface AnimatedDrawableDiagnostics {

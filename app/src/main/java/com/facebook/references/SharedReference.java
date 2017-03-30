@@ -6,8 +6,8 @@ package com.facebook.references;
 
 import android.support.annotation.VisibleForTesting;
 
-import com.facebook.commom.internal.Preconditions;
-import com.facebook.commom.logging.FLog;
+import com.facebook.common.s.Preconditions;
+import com.facebook.log.FLog;
 
 import java.util.IdentityHashMap;
 import java.util.Map;

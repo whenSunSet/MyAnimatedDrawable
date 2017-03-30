@@ -9,30 +9,48 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
 
+import com.facebook.common.s.Preconditions;
+import com.facebook.common.util.AnimatedDrawableUtil;
+import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.AnimatedDrawableFactoryImpl;
 import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.animatedDrawable.AnimatedDrawableFrameInfo;
 import com.facebook.factoryAndProvider.animatedFactory.animatedImageFactory.animatedImage.AnimatedImage;
 import com.facebook.factoryAndProvider.animatedFactory.animatedImageFactory.animatedImage.AnimatedImageFrame;
 import com.facebook.factoryAndProvider.animatedFactory.animatedImageFactory.animatedImage.AnimatedImageResult;
 import com.facebook.references.CloseableReference;
-import com.facebook.util.AnimatedDrawableUtil;
-import com.facebook.util.Preconditions;
 
 import javax.annotation.concurrent.GuardedBy;
 
 /**
- * 一个渲染{@link AnimatedImage}的{@link AnimatedDrawableBackend}
+ * 一个渲染{@link AnimatedImage}的{@link AnimatedDrawableBackend}，该对象在{@link AnimatedDrawableFactoryImpl#create}中被完整创建。
  * An {@link AnimatedDrawableBackend} that renders {@link AnimatedImage}.
  */
 public class AnimatedDrawableBackendImpl implements AnimatedDrawableBackend {
 
+    //外部传入
     private final AnimatedDrawableUtil mAnimatedDrawableUtil;
-
+    //外部传入
     private final AnimatedImageResult mAnimatedImageResult;
-    private final AnimatedImage mAnimatedImage;
+    //外部传入
     private final Rect mRenderedBounds;
+    /**
+     * {@link AnimatedImageResult#getImage()}获取
+     */
+    private final AnimatedImage mAnimatedImage;
+    /**
+     * {@link AnimatedDrawableUtil#fixFrameDurations}获取
+     */
     private final int[] mFrameDurationsMs;
+    /**
+     * {@link AnimatedDrawableUtil#getFrameTimeStampsFromDurations}获取
+     */
     private final int[] mFrameTimestampsMs;
+    /**
+     * {@link AnimatedDrawableUtil#getTotalDurationFromFrameDurations}获取
+     */
     private final int mDurationMs;
+    /**
+     * {@link AnimatedImage#getFrameInfo}获取
+     */
     private final AnimatedDrawableFrameInfo[] mFrameInfos;
 
     @GuardedBy("this")
@@ -166,6 +184,15 @@ public class AnimatedDrawableBackendImpl implements AnimatedDrawableBackend {
         return mAnimatedImageResult.hasDecodedFrame(index);
     }
 
+    /**
+     * 将某一帧绘制到传入的Canvas上
+     * 1.通过{@link #mAnimatedImage}(A)获取{@link AnimatedImageFrame}
+     * 2.通过{@link AnimatedImage#doesRenderSupportScaling()}判断是否支持缩放
+     * 3.如果支持那么调用{@link #renderImageSupportsScaling},否则调用{@link #renderImageDoesNotSupportScaling}
+     * 4.最后将该帧资源释放
+     * @param frameNumber the frame number (0-based)
+     * @param canvas the canvas to render onto
+     */
     @Override
     public void renderFrame(int frameNumber, Canvas canvas) {
         AnimatedImageFrame frame  = mAnimatedImage.getFrame(frameNumber);

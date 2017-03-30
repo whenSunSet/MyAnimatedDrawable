@@ -6,15 +6,16 @@ package com.facebook.factoryAndProvider.animatedFactory.animatedImageFactory.ani
 
 import android.graphics.Bitmap;
 
+import com.facebook.common.s.Preconditions;
 import com.facebook.references.CloseableReference;
-import com.facebook.util.Preconditions;
 
 import java.util.List;
 
 import javax.annotation.Nullable;
 
 /**
- * 解码一个animated image的结果，包含{@link AnimatedImage}以及额外的数据
+ * 这是 将一个{@link AnimatedImage}解码后的 结果，该对象通过{@link AnimatedImageResultBuilder#build()}创建
+ * 其内部包含:一个动画的整体数据{@link AnimatedImage}、预览帧{@link #mPreviewBitmap}、所有帧{@link #mDecodedFrames}
  * The result of decoding an animated image. Contains the {@link AnimatedImage} as well as
  * additional data.
  */
@@ -40,7 +41,7 @@ public class AnimatedImageResult {
     }
 
     /**
-     * 创建一个没有额外数据的{@link AnimatedImageResult}
+     * 创建一个没有额外数据的对象，其只有 一个动画的整体数据{@link AnimatedImage}
      * Creates an {@link AnimatedImageResult} with no additional options.
      *
      * @param image the image
@@ -62,7 +63,6 @@ public class AnimatedImageResult {
     }
 
     /**
-     * 获取image
      * Gets the underlying image.
      *
      * @return the underlying image
