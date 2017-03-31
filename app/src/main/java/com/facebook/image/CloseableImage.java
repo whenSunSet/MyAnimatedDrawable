@@ -7,6 +7,7 @@ package com.facebook.image;
 import com.facebook.image.imageInfo.ImageInfo;
 import com.facebook.image.imageInfo.ImmutableQualityInfo;
 import com.facebook.image.imageInfo.QualityInfo;
+import com.facebook.log.FLog;
 
 import java.io.Closeable;
 
@@ -65,11 +66,11 @@ public abstract class CloseableImage implements Closeable, ImageInfo {
         if (isClosed()) {
             return;
         }
-//        FLog.w(
-//                TAG,
-//                "finalize: %s %x still open.",
-//                this.getClass().getSimpleName(),
-//                System.identityHashCode(this));
+        FLog.w(
+                TAG,
+                "finalize: %s %x still open.",
+                this.getClass().getSimpleName(),
+                System.identityHashCode(this));
         try {
             close();
         } finally {

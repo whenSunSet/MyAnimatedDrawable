@@ -1,10 +1,10 @@
 package com.facebook.factoryAndProvider;
 
 
-import com.facebook.executor.DefaultExecutorSupplier;
-import com.facebook.executor.ExecutorSupplier;
-import com.facebook.factoryAndProvider.animatedFactory.AnimatedFactory;
 import com.facebook.bitmapFactory.PlatformBitmapFactory;
+import com.facebook.executor.executorSupplier.DefaultExecutorSupplier;
+import com.facebook.executor.executorSupplier.ExecutorSupplier;
+import com.facebook.factoryAndProvider.animatedFactory.AnimatedFactory;
 import com.facebook.factoryAndProvider.animatedFactory.AnimatedFactoryImpl;
 
 import java.lang.reflect.Constructor;
@@ -33,7 +33,7 @@ public class AnimatedFactoryProvider {
         if (!sImplLoaded) {
             try {
                 final Class<?> clazz =
-                        Class.forName("com.facebook.imagepipeline.animated.factory.AnimatedFactoryImplSupport");
+                        Class.forName("com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.AnimatedFactoryImplSupport");
                 final Constructor<?> constructor = clazz.getConstructor(
                         PlatformBitmapFactory.class,
                         ExecutorSupplier.class);
@@ -49,7 +49,7 @@ public class AnimatedFactoryProvider {
             }
             try {
                 final Class<?> clazz =
-                        Class.forName("com.facebook.imagepipeline.animated.factory.AnimatedFactoryImpl");
+                        Class.forName("com.facebook.factoryAndProvider.animatedFactory.AnimatedFactoryImpl");
                 final Constructor<?> constructor = clazz.getConstructor(
                         PlatformBitmapFactory.class,
                         ExecutorSupplier.class);

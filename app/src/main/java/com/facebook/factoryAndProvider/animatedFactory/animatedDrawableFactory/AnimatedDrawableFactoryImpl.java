@@ -12,7 +12,7 @@ import android.util.DisplayMetrics;
 
 import com.facebook.common.time.MonotonicClock;
 import com.facebook.common.util.AnimatedDrawableUtil;
-import com.facebook.executor.UiThreadImmediateExecutorService;
+import com.facebook.executor.handlerExecutor.UiThreadImmediateExecutorService;
 import com.facebook.factoryAndProvider.animatedFactory.AnimatedFactoryImpl;
 import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.animatedBackend.AnimatedDrawableBackend;
 import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.animatedBackend.AnimatedDrawableBackendImpl;

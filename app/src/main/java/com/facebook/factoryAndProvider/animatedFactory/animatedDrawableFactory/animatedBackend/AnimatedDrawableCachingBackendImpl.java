@@ -16,7 +16,7 @@ import android.support.v4.util.SparseArrayCompat;
 import com.facebook.common.s.ByteConstants;
 import com.facebook.common.time.MonotonicClock;
 import com.facebook.common.util.AnimatedDrawableUtil;
-import com.facebook.executor.SerialExecutorService;
+import com.facebook.executor.serialExecutor.SerialExecutorService;
 import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.animatedDrawable.AnimatedDrawableFrameInfo;
 import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.other.AnimatedDrawableOptions;
 import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.other.AnimatedImageCompositor;
