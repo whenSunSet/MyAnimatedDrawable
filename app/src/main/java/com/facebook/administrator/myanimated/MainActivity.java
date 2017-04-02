@@ -13,13 +13,14 @@ import com.facebook.bitmapFactory.EmptyJpegGenerator;
 import com.facebook.bitmapFactory.GingerbreadBitmapFactory;
 import com.facebook.bitmapFactory.HoneycombBitmapFactory;
 import com.facebook.bitmapFactory.PlatformBitmapFactory;
+import com.facebook.common.util.SDCardUtils;
 import com.facebook.executor.executorSupplier.DefaultExecutorSupplier;
 import com.facebook.factoryAndProvider.AnimatedFactoryProvider;
 import com.facebook.factoryAndProvider.animatedFactory.AnimatedFactory;
 import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.AnimatedDrawableFactory;
-import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.animatedDrawable.AnimatedDrawable;
 import com.facebook.factoryAndProvider.animatedFactory.animatedImageFactory.AnimatedImageFactory;
 import com.facebook.image.CloseableImage;
+import com.facebook.image.CloseableStaticBitmap;
 import com.facebook.image.EncodedImage;
 import com.facebook.image.imageDecode.DefaultImageDecoder;
 import com.facebook.image.imageDecode.ImageDecodeOptions;
@@ -48,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
     private PlatformBitmapFactory mPlatformBitmapFactory;
     private ImageDecoder mImageDecoder;
 
-    private PooledByteBufferFactory mPooledByteBufferFactory;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +72,11 @@ public class MainActivity extends AppCompatActivity {
 
         CloseableReference<PooledByteBuffer> ref = null;
         try {
-            File file=new File("/storage/emulated/0/表情相册/test.gif");
+            File file=new File(SDCardUtils.getCacheDir(this)+"/1.jpg");
+//            File file=new File(SDCardUtils.getCacheDir(this)+"/2.png");
+//            File file=new File(SDCardUtils.getCacheDir(this)+"/3.gif");
+//            File file=new File(SDCardUtils.getCacheDir(this)+"/4.webp");
+//            File file=new File(SDCardUtils.getCacheDir(this)+"/5.webp");
             FileInputStream fileInputStream=new FileInputStream(file);
             PooledByteBufferFactory pooledByteBufferFactory=mPoolFactory.getPooledByteBufferFactory();
             PooledByteBuffer pooledByteBuffer=pooledByteBufferFactory.newByteBuffer(fileInputStream);
@@ -84,11 +88,13 @@ public class MainActivity extends AppCompatActivity {
 
         CloseableImage image=mImageDecoder.decode(encodedImage,encodedImage.getSize(),ImmutableQualityInfo.FULL_QUALITY, ImageDecodeOptions.newBuilder().build());
 
-        AnimatedDrawable animatedDrawable=(AnimatedDrawable)mAnimatedDrawableFactory.create(image);
+//        AnimatedDrawable animatedDrawable=(AnimatedDrawable)mAnimatedDrawableFactory.create(image);
         ImageView imageView=(ImageView)findViewById(R.id.testImageView);
-        imageView.setImageDrawable(animatedDrawable);
-        animatedDrawable.start();
+//        imageView.setImageDrawable(animatedDrawable);
+//        animatedDrawable.start();
+        imageView.setImageBitmap(((CloseableStaticBitmap)image).getUnderlyingBitmap());
     }
+
 
     public static PlatformBitmapFactory buildPlatformBitmapFactory(
             PoolFactory poolFactory,

@@ -20,6 +20,7 @@ import com.facebook.pool.poolUtil.TooManyBitmapsException;
 import com.facebook.references.CloseableReference;
 
 /**
+ * 基于Dalvik VM解码bitmap的类(2.4到4.4)
  * Base class for bitmap decodes for Dalvik VM (Gingerbread to KitKat).
  */
 abstract class DalvikPurgeableDecoder implements PlatformDecoder {

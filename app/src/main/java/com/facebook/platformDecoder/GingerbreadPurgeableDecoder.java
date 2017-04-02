@@ -16,7 +16,7 @@ import com.facebook.common.s.Throwables;
 import com.facebook.common.stream.LimitedInputStream;
 import com.facebook.imagepipeline.memory.PooledByteBuffer;
 import com.facebook.references.CloseableReference;
-import com.facebook.websupport.WebpSupportStatus;
+import com.facebook.webpsupport.WebpSupportStatus;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -26,7 +26,7 @@ import java.lang.reflect.Method;
 import javax.annotation.Nullable;
 
 /**
- * Gingerbread to Jelly Bean的bitmap解码器
+ * 2.4到4.1的bitmap解码器
  * Bitmap decoder (Gingerbread to Jelly Bean).
  * <p/>
  * <p>This copies incoming encoded bytes into a MemoryFile, and then decodes them using a file

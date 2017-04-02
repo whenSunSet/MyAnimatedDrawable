@@ -1,4 +1,4 @@
-package com.facebook.websupport;
+package com.facebook.webpsupport;
 
 import android.graphics.BitmapFactory;
 import android.os.Build;

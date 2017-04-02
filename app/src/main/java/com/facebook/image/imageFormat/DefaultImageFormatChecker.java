@@ -6,7 +6,7 @@ package com.facebook.image.imageFormat;
 
 import com.facebook.common.s.Ints;
 import com.facebook.common.s.Preconditions;
-import com.facebook.websupport.WebpSupportStatus;
+import com.facebook.webpsupport.WebpSupportStatus;
 
 import java.io.InputStream;
 

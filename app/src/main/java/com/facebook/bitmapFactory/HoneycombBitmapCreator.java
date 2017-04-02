@@ -17,7 +17,7 @@ import com.facebook.imagepipeline.memory.PooledByteBuffer;
 import com.facebook.pool.FlexByteArrayPool;
 import com.facebook.pool.poolFactory.PoolFactory;
 import com.facebook.references.CloseableReference;
-import com.facebook.websupport.BitmapCreator;
+import com.facebook.webpsupport.BitmapCreator;
 
 /**
  * android3.2的BitmapCreator实现

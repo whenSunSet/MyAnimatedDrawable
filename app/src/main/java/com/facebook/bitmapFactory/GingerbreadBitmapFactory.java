@@ -6,10 +6,11 @@ package com.facebook.bitmapFactory;
 
 import android.graphics.Bitmap;
 
+import com.facebook.platformDecoder.GingerbreadPurgeableDecoder;
 import com.facebook.references.CloseableReference;
 
 /**
- * 2.0. bitmap的制造工厂
+ * Android 2.4 bitmap的制造工厂使用了{@link GingerbreadPurgeableDecoder}
  * Bitmap factory for Gingerbread.
  */
 public class GingerbreadBitmapFactory extends PlatformBitmapFactory {
@@ -34,3 +35,4 @@ public class GingerbreadBitmapFactory extends PlatformBitmapFactory {
         return CloseableReference.of(bitmap, SimpleBitmapReleaser.getInstance());
     }
 }
+
