@@ -13,6 +13,7 @@ import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * A single frame of a {@link GifImage}.
+ * 这是jni代码的java类
  */
 @ThreadSafe
 public class GifFrame implements AnimatedImageFrame {
