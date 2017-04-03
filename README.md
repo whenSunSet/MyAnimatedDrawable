@@ -1,7 +1,7 @@
 # 从零开始撸一个Fresco之动画和图片模块解析
 > Fresco中有个很重要的功能就是gif和Webp动画的实现，今天我就来讲解一下这个模块，顺便撸了个模块demo出来。这是项目的github地址[Fresco动画模块](https://github.com/whenSunSet/MyAnimatedDrawable)，推荐看博客的时候结合项目一起看，项目中绝大部分类都有细致的注释，看起来还是很清晰的。另外我之前翻译了Fresco源代码这是项目地址[Fresco源码翻译地址](https://github.com/whenSunSet/MyFresco)，这个项目会不断更新，想学习Fresco源代码的同学一定不要错过。
 
-##一、项目包结构
+## 一、项目包结构
 - 1.animated：
 	- 1.gif：这个包中的两个类都使用了jni代码，GifImage有两个功能：1.用于将Gif动画已解码数据储存在jni代码管理的本地内存中2.通过jni代码解析未解码的Gif数据。GifFrame则是储存Gif动画单个帧的数据也是通过jni代码管里的本地内存。
 	- 2.webp:WebPImage类似前面的GifImage，只不过换成了Webp的数据。WebPFrame同理类似GifFrame
@@ -40,7 +40,7 @@
 			- 3.other：一些辅助AnimatedDrawable的类
 
 
-##二、对象池Pool
+## 二、对象池Pool
 > 先来讲讲pool包中的对象池，对象池有什么用？当我们使用一个频繁创建和销毁的对象的时候，为了减少创建和销毁对象所带来的消耗，我们可以维持一个该对象的集合，当不使用的时候将对象放回集合中，使用的时候直接获取引用赋予值。一个典型的对象池就是线程池。在Fresco中由于要频繁地对Bitmap进行操作，所以对Bitmap我们可以使用对象池，此外还有byte数组等。
 
 - 1.先来介绍Pool所用到的数据结构：
@@ -48,7 +48,7 @@
 	- 2.上面的这一个Pool是基于Java内存分配，但是我们都知道一个app能使用的内存是有限制的，因为使用new和创建Bitmap的时候使用的内存都是通过dalvik虚拟机在java堆上分配内存的。Android系统设置了一个Java堆的阈值(48M、24M、16M等)当超出之后就会报OOM。而使用jni代码在native heap上面可以申请的内存却是不受限制的(只受整个手机的内存限制)。所以Fresco当然使用了这个方式以提供Byte数组池。具体封装了jni管理的本地内存的类是imagePipline.memory包下的NativeMemoryChunk类。这里的NativeMemoryChunk只替代了1中申请内存的方式，其他方面不变。
 - 2.总结：**在Fresco中一般的静态图片的数据使用的是BitmapPool，这里使用的是java堆上的内存。而动态图片类似Gif和Webp，则是使用Native内存**
 
-##三、AnimatedDrawable
+## 三、AnimatedDrawable
 ![](http://img.blog.csdn.net/20170403151154166?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTEwMTg5OTg2MzI=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 > 上面的图是factoryAndProvider包中类的结构示意图，**一定要结合项目一起观看**。AnimatedDrawable顾名思义就是一个可以显示动画的Drawable。Android的View在设计的时候为了让Drawable能够实现动画，特意实现了Drawable.CallBack接口。这个接口可以让Drwable对View显示的图像进行调度。AnimatedDrawable就是通过这个机制实现动画的。
 
@@ -60,5 +60,5 @@
 	- 5.AbstractAnimatedDrawable继承了Drawable然后内部集成了AnimatedDrawableCachingBackendImpl。最后通过Drawable.CallBack接口在View上绘制AnimatedDrawableCachingBackendImpl中提供的每一帧的数据。
 	- 6.**以上就是简述AnimatedDrawable创建的全过程，项目中有详细的注释，大家可以跟着上面这几个步骤观看项目源码**
 - 2.AnimatedDrawable显示动画的流程：**我在项目中的AbstractAnimatedDrawable类的开头，详细地描述了AnimatedDrawable的两种启动动画的方式，大家可以顺着项目中描述的路线观看**
-##四、项目使用
+## 四、项目使用
 > 在administrator.myanimated包下有个MainActivity，用来演示png、jpg、静态webp、动态webp、gif这五种图像的展示。大家在使用的时候记得将自己准备的这个几种文件按命名，放入app的缓存文件夹里。
