@@ -1,0 +1,1 @@
+WebPImage类似前面的GifImage，只不过换成了Webp的数据。WebPFrame同理类似GifFrame

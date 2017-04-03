@@ -1,0 +1,1 @@
+包对外的实现是CloseableAnimatedImage和CloseableStaticBitmap，一个用于封装动画数据，一个用于封装静态图片信息。

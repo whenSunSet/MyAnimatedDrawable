@@ -1,0 +1,1 @@
+包对外提供的实现是AnimatedDrawable，该类实现了Drawable，用于将AnimatedDrawableBackend提供的动画数据绘制在该Drawable设置测View上。

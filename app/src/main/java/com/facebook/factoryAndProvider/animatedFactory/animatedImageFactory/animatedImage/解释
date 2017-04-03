@@ -1,0 +1,2 @@
+这里个包的主要实现是AnimatedImageResult，上一级目录中说的CloseableAnimatedImage中的Gif和Webp解码后的数据就是用这个AnimatedImageResult包装。其内部储存了
+animated包中的类：整个动画、每帧画面和预览帧。

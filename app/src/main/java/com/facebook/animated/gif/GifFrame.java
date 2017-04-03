@@ -12,6 +12,8 @@ import com.facebook.common.DoNotStrip;
 import javax.annotation.concurrent.ThreadSafe;
 
 /**
+ * GifFrame则是将Gif动画单个帧的数据储存在jni代码管里的本地内存中。
+ *
  * A single frame of a {@link GifImage}.
  * 这是jni代码的java类
  */

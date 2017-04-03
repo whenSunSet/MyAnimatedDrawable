@@ -1,0 +1,1 @@
+AnimatedFactory用于返回创建一个Gif和Webp动画的两个重要工厂：AnimatedDrawableFactory和AnimatedImageFactory。AnimatedFactoryImpl是具体实现

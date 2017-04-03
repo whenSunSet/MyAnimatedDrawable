@@ -1,0 +1,1 @@
+这里的AnimatedDrawableFactory用于将AnimatedImageFactory提供的CloseableImage解析成AnimatedDrawable。具体实现是AnimatedDrawableFactoryImpl。

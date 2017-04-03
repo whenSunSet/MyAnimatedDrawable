@@ -1,0 +1,2 @@
+AnimatedImageFactory用于将EncodedImage这个未解码的Gif或者Webp的数据类，解码成CloseableImage,如果解码成功这里的CloseableImage的实现是CloseableAnimatedImage。
+AnimatedImageFactoryImpl是AnimatedImageFactory的具体实现。

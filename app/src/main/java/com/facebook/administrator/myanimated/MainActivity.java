@@ -5,7 +5,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.util.Pools;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.animation.ValueAnimator;
 
 import com.example.administrator.myanimated.R;
 import com.facebook.bitmapFactory.ArtBitmapFactory;
@@ -18,7 +21,7 @@ import com.facebook.executor.executorSupplier.DefaultExecutorSupplier;
 import com.facebook.factoryAndProvider.AnimatedFactoryProvider;
 import com.facebook.factoryAndProvider.animatedFactory.AnimatedFactory;
 import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.AnimatedDrawableFactory;
-import com.facebook.factoryAndProvider.animatedFactory.animatedImageFactory.AnimatedImageFactory;
+import com.facebook.factoryAndProvider.animatedFactory.animatedDrawableFactory.animatedDrawable.AnimatedDrawable;
 import com.facebook.image.CloseableImage;
 import com.facebook.image.CloseableStaticBitmap;
 import com.facebook.image.EncodedImage;
@@ -38,63 +41,117 @@ import com.facebook.references.CloseableReference;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
-    private AnimatedDrawableFactory mAnimatedDrawableFactory;
-    private AnimatedImageFactory mAnimatedImageFactory;
-    private AnimatedFactory mAnimatedFactory;
-    private PoolFactory mPoolFactory;
-    private PlatformDecoder mPlatformDecoder;
-    private PlatformBitmapFactory mPlatformBitmapFactory;
-    private ImageDecoder mImageDecoder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mPoolFactory=new PoolFactory(PoolConfig.newBuilder().build());
-        mPlatformDecoder=buildPlatformDecoder(mPoolFactory,true);
-        mPlatformBitmapFactory=buildPlatformBitmapFactory(
-                mPoolFactory
+
+        initView();
+        initFresco();
+
+        pngButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CloseableImage closeableImage=initCloseableImage("1.png");
+                if (closeableImage!=null)imageView.setImageBitmap(((CloseableStaticBitmap)closeableImage).getUnderlyingBitmap());
+            }
+        });
+        jpgButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CloseableImage closeableImage=initCloseableImage("2.jpg");
+                if (closeableImage!=null)imageView.setImageBitmap(((CloseableStaticBitmap)closeableImage).getUnderlyingBitmap());
+            }
+        });
+        staticWebpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CloseableImage closeableImage=initCloseableImage("3.webp");
+                if (closeableImage!=null)imageView.setImageBitmap(((CloseableStaticBitmap)closeableImage).getUnderlyingBitmap());
+            }
+        });
+        dynamicWebpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CloseableImage closeableImage=initCloseableImage("4.webp");
+                AnimatedDrawable animatedDrawable=(AnimatedDrawable)mAnimatedDrawableFactory.create(closeableImage);
+                if (closeableImage!=null)imageView.setImageDrawable(animatedDrawable);
+                animatedDrawable.start();
+            }
+        });
+        gifButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CloseableImage closeableImage=initCloseableImage("5.gif");
+                AnimatedDrawable animatedDrawable=(AnimatedDrawable)mAnimatedDrawableFactory.create(closeableImage);
+                if (closeableImage!=null)imageView.setImageDrawable(animatedDrawable);
+                ValueAnimator valueAnimator=animatedDrawable.createValueAnimator();
+                valueAnimator.start();
+            }
+        });
+    }
+
+    Button pngButton;
+    Button jpgButton;
+    Button staticWebpButton;
+    Button dynamicWebpButton;
+    Button gifButton;
+    ImageView imageView;
+    private void initView(){
+        pngButton=(Button)findViewById(R.id.setPng);
+        jpgButton=(Button)findViewById(R.id.setJpg);
+        staticWebpButton=(Button)findViewById(R.id.setStaticWebp);
+        dynamicWebpButton=(Button)findViewById(R.id.setDynamicWebp);
+        gifButton=(Button)findViewById(R.id.setGif);
+        imageView=(ImageView)findViewById(R.id.testImageView);
+    }
+
+    AnimatedDrawableFactory mAnimatedDrawableFactory;
+    ImageDecoder mImageDecoder;
+    PooledByteBufferFactory pooledByteBufferFactory;
+    private void initFresco(){
+        PoolFactory poolFactory=new PoolFactory(PoolConfig.newBuilder().build());
+        PlatformDecoder mPlatformDecoder=buildPlatformDecoder(poolFactory,true);
+        PlatformBitmapFactory mPlatformBitmapFactory=buildPlatformBitmapFactory(
+                poolFactory
                 ,mPlatformDecoder);
-        mAnimatedFactory = AnimatedFactoryProvider.getAnimatedFactory(
+        AnimatedFactory mAnimatedFactory= AnimatedFactoryProvider.getAnimatedFactory(
                 mPlatformBitmapFactory,
                 new DefaultExecutorSupplier(2) );
 
-        mAnimatedImageFactory=mAnimatedFactory.getAnimatedImageFactory();
-        mAnimatedDrawableFactory=mAnimatedFactory.getAnimatedDrawableFactory(this);
-
         mImageDecoder = new DefaultImageDecoder(
-                mAnimatedImageFactory,
+                mAnimatedFactory.getAnimatedImageFactory(),
                 mPlatformDecoder,
                 Bitmap.Config.ARGB_8888);
 
-        CloseableReference<PooledByteBuffer> ref = null;
+        mAnimatedDrawableFactory=mAnimatedFactory.getAnimatedDrawableFactory(this);
+        pooledByteBufferFactory=poolFactory.getPooledByteBufferFactory();
+    }
+
+    private CloseableImage initCloseableImage(String fileName){
+        CloseableReference<PooledByteBuffer> ref;
+        File file=new File(SDCardUtils.getCacheDir(MainActivity.this)+"/"+fileName);
+        FileInputStream fileInputStream;
+        PooledByteBuffer pooledByteBuffer=null;
         try {
-            File file=new File(SDCardUtils.getCacheDir(this)+"/1.jpg");
-//            File file=new File(SDCardUtils.getCacheDir(this)+"/2.png");
-//            File file=new File(SDCardUtils.getCacheDir(this)+"/3.gif");
-//            File file=new File(SDCardUtils.getCacheDir(this)+"/4.webp");
-//            File file=new File(SDCardUtils.getCacheDir(this)+"/5.webp");
-            FileInputStream fileInputStream=new FileInputStream(file);
-            PooledByteBufferFactory pooledByteBufferFactory=mPoolFactory.getPooledByteBufferFactory();
-            PooledByteBuffer pooledByteBuffer=pooledByteBufferFactory.newByteBuffer(fileInputStream);
-            ref = CloseableReference.of(pooledByteBuffer);
+            if (file==null)return null;
+            fileInputStream=new FileInputStream(file);
+            pooledByteBuffer=pooledByteBufferFactory.newByteBuffer(fileInputStream);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        ref = CloseableReference.of(pooledByteBuffer);
         EncodedImage encodedImage=new EncodedImage(ref);
-
         CloseableImage image=mImageDecoder.decode(encodedImage,encodedImage.getSize(),ImmutableQualityInfo.FULL_QUALITY, ImageDecodeOptions.newBuilder().build());
-
-//        AnimatedDrawable animatedDrawable=(AnimatedDrawable)mAnimatedDrawableFactory.create(image);
-        ImageView imageView=(ImageView)findViewById(R.id.testImageView);
-//        imageView.setImageDrawable(animatedDrawable);
-//        animatedDrawable.start();
-        imageView.setImageBitmap(((CloseableStaticBitmap)image).getUnderlyingBitmap());
+        return image;
     }
-
 
     public static PlatformBitmapFactory buildPlatformBitmapFactory(
             PoolFactory poolFactory,

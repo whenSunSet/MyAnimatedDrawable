@@ -1,0 +1,1 @@
+用于提供串行执行任务的Excutor，DefaultSerialExecutorService是具体实现。

@@ -1,0 +1,1 @@
+在Android2.3以下是不支持Webp的，这个包中的类就是用来让2.3一下的Android机可以使用Webp。

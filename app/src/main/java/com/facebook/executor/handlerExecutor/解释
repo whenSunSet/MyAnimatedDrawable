@@ -1,0 +1,1 @@
+用于提供转移到Handler线程的Excutor，唯一实现是UiThreadImmediateExecutorService，转到主线程。

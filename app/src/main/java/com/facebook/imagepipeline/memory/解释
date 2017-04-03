@@ -1,0 +1,2 @@
+NativeMemoryChunk是本地内存块的java封装，用于提供一块本地内存，这里的本地内存使用jni代码管理。NativePooledByteBuffer则是基于NativeMemoryChunk提供了一个字节池，
+用来提供可回收使用的字节数组。

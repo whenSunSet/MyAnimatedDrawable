@@ -1,0 +1,2 @@
+无论是动画的帧还是静态的图片，最后都需要创建为Bitmap显示在View上。而不同Android版本创建Bitmap的方式是不同的，这里的工厂不同的工厂就是用于不同Android版本创建Bitmap
+这里的工厂用到了后面的platformDecoder包中的解码器，platformDecoder包中的类才是在不同Android版本下创建Bitmap的具体代码逻辑。

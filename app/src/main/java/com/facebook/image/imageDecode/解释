@@ -1,0 +1,2 @@
+AnimatedImageDecoder的实现为animated包下的GifImage和WebPImage，用于解码未解码的动画数据。ImageDecoder的实现是DefaultImageDecoder用于解码所有图像数据，其用到了
+AnimatedImageFactoryImpl以提供CloseableAnimatedImage。
