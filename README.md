@@ -1,5 +1,7 @@
 # 从零开始撸一个Fresco之gif和Webp动画
-> Fresco中有个很重要的功能就是gif和Webp动画的实现，今天我就来讲解一下这个模块，顺便撸了个模块demo出来。这是项目的github地址[Fresco动画模块](https://github.com/whenSunSet/MyAnimatedDrawable)，推荐看博客的时候结合项目一起看，项目中绝大部分类都有细致的注释，看起来还是很清晰的。另外我之前翻译了Fresco源代码这是项目地址[Fresco源码翻译地址](https://github.com/whenSunSet/MyFresco)，这个项目会不断更新，想学习Fresco源代码的同学一定不要错过。
+> 转载请注明出处
+> **Fresco源代码文档翻译项目请看这里：[FrescoFresco源代码翻译项目](https://github.com/whenSunSet/MyFresco/tree/master)** 这个项目会不断更新想学习Fresco源代码的同学一定不要错过。
+> Fresco中有个很重要的功能就是gif和Webp动画的实现，今天我就来讲解一下这个模块，顺便撸了个模块demo出来。这是项目的github地址[Fresco动画模块](https://github.com/whenSunSet/MyAnimatedDrawable)，推荐看博客的时候结合项目一起看，项目中绝大部分类都有细致的注释，看起来还是很清晰的。
 
 ## 一、项目包结构
 - 1.animated：
@@ -44,12 +46,12 @@
 > 先来讲讲pool包中的对象池，对象池有什么用？当我们使用一个频繁创建和销毁的对象的时候，为了减少创建和销毁对象所带来的消耗，我们可以维持一个该对象的集合，当不使用的时候将对象放回集合中，使用的时候直接获取引用赋予值。一个典型的对象池就是线程池。在Fresco中由于要频繁地对Bitmap进行操作，所以对Bitmap我们可以使用对象池，此外还有byte数组等。
 
 - 1.先来介绍Pool所用到的数据结构：
-	- 1.以Bitmap为例要重新使用一个Bitmap，就需要预期的Bitmap与重用的Bitmap使用的内存字节数相同或者重用的大于预期的，只有这样预期的Bitmap才能完整地放入被重用的Bitmap中。所以这里我们用到了SparseArray(稀疏数组)和Bucket(桶，自定义的类，内部使用了LinkedList)。首先SparseArray的下标表示内存的字节数，由于字节数一般跨度比较大所以使用了SparseArray。SparseArray中储存着Bucket，Bucket表示当两个可以被重用的Bitmap字节数相同时，使用LinkedList进行排列储存。下面的图简单的描述了一下这个数据结构。![](http://img.blog.csdn.net/20170403164022274?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTEwMTg5OTg2MzI=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+	- 1.以Bitmap为例要重新使用一个Bitmap，就需要预期的Bitmap与重用的Bitmap使用的内存字节数相同或者重用的大于预期的，只有这样预期的Bitmap才能完整地放入被重用的Bitmap中。所以这里我们用到了SparseArray(稀疏数组)和Bucket(桶，自定义的类，内部使用了LinkedList)。首先SparseArray的下标表示内存的字节数，由于字节数一般跨度比较大所以使用了SparseArray。SparseArray中储存着Bucket，Bucket表示当两个可以被重用的Bitmap字节数相同时，使用LinkedList进行排列储存。下面的图简单的描述了一下这个数据结构。![](http://upload-images.jianshu.io/upload_images/2911038-951b00f5f2f64da2?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 	- 2.上面的这一个Pool是基于Java内存分配，但是我们都知道一个app能使用的内存是有限制的，因为使用new和创建Bitmap的时候使用的内存都是通过dalvik虚拟机在java堆上分配内存的。Android系统设置了一个Java堆的阈值(48M、24M、16M等)当超出之后就会报OOM。而使用jni代码在native heap上面可以申请的内存却是不受限制的(只受整个手机的内存限制)。所以Fresco当然使用了这个方式以提供Byte数组池。具体封装了jni管理的本地内存的类是imagePipline.memory包下的NativeMemoryChunk类。这里的NativeMemoryChunk只替代了1中申请内存的方式，其他方面不变。
 - 2.总结：**在Fresco中一般的静态图片的数据使用的是BitmapPool，这里使用的是java堆上的内存。而动态图片类似Gif和Webp，则是使用Native内存**
 
 ## 三、AnimatedDrawable
-![](http://img.blog.csdn.net/20170403151154166?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTEwMTg5OTg2MzI=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![](http://upload-images.jianshu.io/upload_images/2911038-9e321a631d14a7bc?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 > 上面的图是factoryAndProvider包中类的结构示意图，**一定要结合项目一起观看**。AnimatedDrawable顾名思义就是一个可以显示动画的Drawable。Android的View在设计的时候为了让Drawable能够实现动画，特意实现了Drawable.CallBack接口。这个接口可以让Drwable对View显示的图像进行调度。AnimatedDrawable就是通过这个机制实现动画的。
 
 - 1.如何创建一个AnimatedDarwable，由上面的图可以看出有以下几个步骤：
