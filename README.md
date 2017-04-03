@@ -1,4 +1,4 @@
-# 从零开始撸一个Fresco之动画和图片模块解析
+# 从零开始撸一个Fresco之gif和Webp动画
 > Fresco中有个很重要的功能就是gif和Webp动画的实现，今天我就来讲解一下这个模块，顺便撸了个模块demo出来。这是项目的github地址[Fresco动画模块](https://github.com/whenSunSet/MyAnimatedDrawable)，推荐看博客的时候结合项目一起看，项目中绝大部分类都有细致的注释，看起来还是很清晰的。另外我之前翻译了Fresco源代码这是项目地址[Fresco源码翻译地址](https://github.com/whenSunSet/MyFresco)，这个项目会不断更新，想学习Fresco源代码的同学一定不要错过。
 
 ## 一、项目包结构
